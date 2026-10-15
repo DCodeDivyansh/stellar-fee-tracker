@@ -8,7 +8,12 @@ import type {
   RecommendRequest,
 } from './types'
 
-const BASE = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8080'
+
+const BASE =
+  typeof window === 'undefined'
+    ? process.env.BACKEND_URL || 'http://localhost:8080'
+    : process.env.NEXT_PUBLIC_API_URL || '/api'
+
 
 async function post<T>(path: string, body: unknown): Promise<T> {
   const res = await fetch(`${BASE}${path}`, {
